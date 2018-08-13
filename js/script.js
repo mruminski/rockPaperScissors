@@ -21,6 +21,7 @@ var userMove;
 var aiMove;
 var userPoints = 0;
 var aiPoints = 0;
+var rounds;
 
 var aiTurn = function() {
   var random = Math.floor((Math.random() * 3) + 1);
@@ -72,9 +73,24 @@ var printResult = function(userMove) {
   resultOutput.innerHTML = userPoints+' - '+aiPoints;
 }
 
-var playerMove = function(userMove) { 
-  aiTurn();
-  printResult(userMove);
+var playerMove = function(userMove) {
+  if ((userPoints <= rounds) && (aiPoints <= rounds)) {
+    aiTurn();
+    printResult(userMove);
+  } else {
+    output.innerHTML = 'YOU WON THE ENTIRE GAME!!!<br>';
+    rock.addEventListener('click', function() {
+      output.innerHTML += 'Game over, please press the new game button!<br>';
+    });
+    
+    paper.addEventListener('click', function() {
+      output.innerHTML += 'Game over, please press the new game button!<br>';
+    });
+    
+    scissors.addEventListener('click',function() {
+      output.innerHTML += 'Game over, please press the new game button!<br>';
+    });
+  }
 }
 
 rock.addEventListener('click', function() {
@@ -90,10 +106,12 @@ scissors.addEventListener('click',function() {
 });
 
 newGame.addEventListener('click', function() {
-  var round = parseInt(window.prompt('Enter the number of won rounds to win'+
+  rounds = parseInt(window.prompt('Enter the number of won rounds to win'+
   'entire game'));
   
-  if (!isNaN(round)) {
-    toWin.innerHTML = 'You have to win '+round+' rounds, to won the entire game';
+  if (!isNaN(rounds)) {
+    toWin.innerHTML = 'You have to win '+rounds+' rounds, to won the entire game';
   }
+
+
 });
