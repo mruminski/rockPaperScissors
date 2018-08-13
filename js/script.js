@@ -10,15 +10,16 @@ zasady:
 
 'use strict';
 
-var output = document.getElementsByClassName('container__output');
+var output = document.getElementById('container__output');
 var rock = document.getElementById('rock');
 var paper = document.getElementById('paper');
 var scissors = document.getElementById('scissors');
+var move;
+var aiMove;
 
-var playerMove = function(move) {
+var aiTurn = function() {
   var random = Math.floor((Math.random() * 3) + 1);
-  var aiMove;
-
+  
   if (random == 1) {
     aiMove = 'paper';
   }
@@ -27,11 +28,51 @@ var playerMove = function(move) {
   } else {
     aiMove = 'scissors';
   }
-
-
 }
 
+var printResult = function(move) {
+  if (move == aiMove) {
+    output.innerHTML = 'DRAW';
+  }
 
-rock.addEventListener('click', playerMove('rock'));
-paper.addEventListener('click', playerMove('paper'));
-scissors.addEventListener('click', playerMove('scissors'));
+  if ((move == 'paper') && (aiMove == 'rock')) {
+    output.innerHTML = 'YOU WON: you played PAPER, computer played ROCK.';
+  }
+
+  if ((move == 'rock') && (aiMove == 'scissors')) {
+    output.innerHTML = 'YOU WON: you played ROCK, computer played SCISSORS.';
+  }
+
+  if ((move == 'scissors') && (aiMove == 'paper')) {
+    output.innerHTML = 'YOU WON: you played SCISSORS, computer played PAPER.';
+  }
+
+  if ((aiMove == 'paper') && (move == 'rock')) {
+    output.innerHTML = 'COMPUTER WON: computer played PAPER, you played ROCK.';
+  }
+
+  if ((aiMove == 'rock') && (move == 'scissors')) {
+    output.innerHTML = 'COMPUTER WON: computer played ROCK, you played SCISSORS.';
+  }
+
+  if ((aiMove == 'scissors') && (move == 'paper')) {
+    output.innerHTML = 'COMPUTER WON: computer played SCISSORS, you played PAPER.';
+  }
+}
+
+var playerMove = function(move) { 
+  aiTurn();
+  printResult(move);
+}
+
+rock.addEventListener('click', function() {
+  playerMove('rock');
+});
+
+paper.addEventListener('click', function() {
+  playerMove('paper');
+});
+
+scissors.addEventListener('click',function() {
+  playerMove('scissors');
+});
