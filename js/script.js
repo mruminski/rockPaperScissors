@@ -14,7 +14,7 @@ var output = document.getElementById('container__output');
 var rock = document.getElementById('rock');
 var paper = document.getElementById('paper');
 var scissors = document.getElementById('scissors');
-var move;
+var userMove;
 var aiMove;
 
 var aiTurn = function() {
@@ -30,39 +30,39 @@ var aiTurn = function() {
   }
 }
 
-var printResult = function(move) {
-  if (move == aiMove) {
+var printResult = function(userMove) {
+  if (userMove == aiMove) {
     output.innerHTML = 'DRAW';
   }
 
-  if ((move == 'paper') && (aiMove == 'rock')) {
+  if ((userMove == 'paper') && (aiMove == 'rock')) {
     output.innerHTML = 'YOU WON: you played PAPER, computer played ROCK.';
   }
 
-  if ((move == 'rock') && (aiMove == 'scissors')) {
+  if ((userMove == 'rock') && (aiMove == 'scissors')) {
     output.innerHTML = 'YOU WON: you played ROCK, computer played SCISSORS.';
   }
 
-  if ((move == 'scissors') && (aiMove == 'paper')) {
+  if ((userMove == 'scissors') && (aiMove == 'paper')) {
     output.innerHTML = 'YOU WON: you played SCISSORS, computer played PAPER.';
   }
 
-  if ((aiMove == 'paper') && (move == 'rock')) {
+  if ((aiMove == 'paper') && (userMove == 'rock')) {
     output.innerHTML = 'COMPUTER WON: computer played PAPER, you played ROCK.';
   }
 
-  if ((aiMove == 'rock') && (move == 'scissors')) {
+  if ((aiMove == 'rock') && (userMove == 'scissors')) {
     output.innerHTML = 'COMPUTER WON: computer played ROCK, you played SCISSORS.';
   }
 
-  if ((aiMove == 'scissors') && (move == 'paper')) {
+  if ((aiMove == 'scissors') && (userMove == 'paper')) {
     output.innerHTML = 'COMPUTER WON: computer played SCISSORS, you played PAPER.';
   }
 }
 
-var playerMove = function(move) { 
+var playerMove = function(userMove) { 
   aiTurn();
-  printResult(move);
+  printResult(userMove);
 }
 
 rock.addEventListener('click', function() {
