@@ -11,7 +11,8 @@ zasady:
 'use strict';
 
 var output = document.getElementById('container__output');
-var resultOutput = document.getElementById('result');
+var resultOutput = document.getElementById('container__result');
+var toWin = document.getElementById('container__to-win');
 var rock = document.getElementById('rock');
 var paper = document.getElementById('paper');
 var scissors = document.getElementById('scissors');
@@ -86,4 +87,13 @@ paper.addEventListener('click', function() {
 
 scissors.addEventListener('click',function() {
   playerMove('scissors');
+});
+
+newGame.addEventListener('click', function() {
+  var round = parseInt(window.prompt('Enter the number of won rounds to win'+
+  'entire game'));
+  
+  if (!isNaN(round)) {
+    toWin.innerHTML = 'You have to win '+round+' rounds, to won the entire game';
+  }
 });
