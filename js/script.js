@@ -120,7 +120,7 @@ newGame.addEventListener('click', function() {
   'entire game'));
 
   if (!isNaN(rounds)) {
-    toWin.innerHTML = 'You have to win '+rounds+' rounds, to won the entire game';
+    toWin.innerHTML = 'You have to won '+rounds+' rounds, to win the entire game';
     output.innerHTML = '';
     userPoints = 0;
     aiPoints = 0;
