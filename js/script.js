@@ -74,9 +74,11 @@ var printResult = function(userMove) {
 }
 
 var playerMove = function(userMove) {
-  if ((userPoints <= rounds) && (aiPoints <= rounds)) {
+  // BUG HERE
+  if (userPoints < rounds || aiPoints < rounds) {
     aiTurn();
     printResult(userMove);
+    console.log('USER: '+userPoints+' '+'AI: '+aiPoints);
   } else {
     output.innerHTML = 'YOU WON THE ENTIRE GAME!!!<br>';
     rock.addEventListener('click', function() {
@@ -105,6 +107,7 @@ scissors.addEventListener('click',function() {
   playerMove('scissors');
 });
 
+// BUG HERE
 newGame.addEventListener('click', function() {
   rounds = parseInt(window.prompt('Enter the number of won rounds to win'+
   'entire game'));
@@ -116,6 +119,4 @@ newGame.addEventListener('click', function() {
     aiPoints = 0;
     resultOutput.innerHTML = userPoints+' - '+aiPoints;
   }
-
-
 });
