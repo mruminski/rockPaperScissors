@@ -10,9 +10,12 @@ zasady:
 
 'use strict';
 
-var output = document.getElementById('container__output');
-var resultOutput = document.getElementById('container__result');
-var toWin = document.getElementById('container__to-win');
+var output = document.getElementsByClassName('container__output');
+var resultOutput = document.getElementsByClassName('container__result');
+var toWin = document.getElementsByClassName('container__to-win');
+output = output[0];
+resultOutput = resultOutput[0];
+toWin = toWin[0];
 var rock = document.getElementById('rock');
 var paper = document.getElementById('paper');
 var scissors = document.getElementById('scissors');
@@ -74,13 +77,17 @@ var printResult = function(userMove) {
 }
 
 var playerMove = function(userMove) {
-  // BUG HERE
-  if (userPoints < rounds || aiPoints < rounds) {
+  var canPlay = true;
+
+  if (userPoints >= rounds || aiPoints >= rounds) {
+    canPlay = false;
+  }
+
+  if (canPlay) {
     aiTurn();
     printResult(userMove);
-    console.log('USER: '+userPoints+' '+'AI: '+aiPoints);
   } else {
-    output.innerHTML = 'YOU WON THE ENTIRE GAME!!!<br>';
+    output.innerHTML = '<br>YOU WON THE ENTIRE GAME!!!<br>';
     rock.addEventListener('click', function() {
       output.innerHTML += 'Game over, please press the new game button!<br>';
     });
@@ -111,7 +118,7 @@ scissors.addEventListener('click',function() {
 newGame.addEventListener('click', function() {
   rounds = parseInt(window.prompt('Enter the number of won rounds to win'+
   'entire game'));
-  
+
   if (!isNaN(rounds)) {
     toWin.innerHTML = 'You have to win '+rounds+' rounds, to won the entire game';
     output.innerHTML = '';
