@@ -1,30 +1,18 @@
-/*
-- zdefiniowana liczba wygranych rund
-
-zasady:
-- ten sam ruch - REMIS
-- papier wygrywa z kamieniem
-- kamień wygrywa z nożycami
-- nożyce wygrywają z papierem
-*/
-
 'use strict';
 
-var output = document.getElementsByClassName('container__output');
-var resultOutput = document.getElementsByClassName('container__result');
-var toWin = document.getElementsByClassName('container__to-win');
-output = output[0];
-resultOutput = resultOutput[0];
-toWin = toWin[0];
-var rock = document.getElementById('rock');
-var paper = document.getElementById('paper');
-var scissors = document.getElementById('scissors');
-var newGame = document.getElementById('new-game');
+var output = document.querySelector('.container__output');
+var resultOutput = document.querySelector('.container__result');
+var toWin = document.querySelector('.container__to-win');
+var rock = document.querySelector('#rock');
+var paper = document.querySelector('#paper');
+var scissors = document.querySelector('#scissors');
+var newGame = document.querySelector('#new-game');
 var userMove;
 var aiMove;
 var userPoints = 0;
 var aiPoints = 0;
 var rounds;
+var canPlay = true;
 
 var aiTurn = function() {
   var random = Math.floor((Math.random() * 3) + 1);
@@ -40,7 +28,7 @@ var aiTurn = function() {
 }
 
 var printResult = function(userMove) {
-  if (userMove == aiMove) {
+   if (userMove == aiMove) {
     output.innerHTML = 'DRAW';
   }
 
@@ -76,9 +64,17 @@ var printResult = function(userMove) {
   resultOutput.innerHTML = userPoints+' - '+aiPoints;
 }
 
-var playerMove = function(userMove) {
-  var canPlay = true;
+var showGameOver = function(canPlay) {
+  if (!canPlay) {
+    output.innerHTML += 'Game over, please press the new game button!<br>';
+  }
+}
 
+var playerMove = function(userMove) {
+  if (!canPlay) {
+    return;
+  }
+  
   if (userPoints >= rounds || aiPoints >= rounds) {
     canPlay = false;
   }
@@ -86,36 +82,28 @@ var playerMove = function(userMove) {
   if (canPlay) {
     aiTurn();
     printResult(userMove);
-  } else {
-    output.innerHTML = '<br>YOU WON THE ENTIRE GAME!!!<br>';
-    rock.addEventListener('click', function() {
-      output.innerHTML += 'Game over, please press the new game button!<br>';
-    });
-    
-    paper.addEventListener('click', function() {
-      output.innerHTML += 'Game over, please press the new game button!<br>';
-    });
-    
-    scissors.addEventListener('click',function() {
-      output.innerHTML += 'Game over, please press the new game button!<br>';
-    });
-  }
+    return;
+  } 
+    return output.innerHTML = '<br>YOU WON THE ENTIRE GAME!!!<br>';
 }
 
-rock.addEventListener('click', function() {
+rock.addEventListener('click', function() { 
   playerMove('rock');
+  showGameOver(canPlay);
 });
 
 paper.addEventListener('click', function() {
   playerMove('paper');
+  showGameOver(canPlay);
 });
 
 scissors.addEventListener('click',function() {
   playerMove('scissors');
+  showGameOver(canPlay);
 });
 
-// BUG HERE
 newGame.addEventListener('click', function() {
+  canPlay = true;
   rounds = parseInt(window.prompt('Enter the number of won rounds to win'+
   'entire game'));
 
