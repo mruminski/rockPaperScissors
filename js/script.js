@@ -1,24 +1,17 @@
-/*
-- zdefiniowana liczba wygranych rund
-
-zasady:
-- ten sam ruch - REMIS
-- papier wygrywa z kamieniem
-- kamień wygrywa z nożycami
-- nożyce wygrywają z papierem
-*/
-
 'use strict';
 
-var output = document.getElementById('container__output');
-var resultOutput = document.getElementById('result');
-var rock = document.getElementById('rock');
-var paper = document.getElementById('paper');
-var scissors = document.getElementById('scissors');
-var userMove;
+var output = document.querySelector('.container__output');
+var resultOutput = document.querySelector('.container__result');
+var toWin = document.querySelector('.container__to-win');
+var rock = document.querySelector('#rock');
+var paper = document.querySelector('#paper');
+var scissors = document.querySelector('#scissors');
+var newGame = document.querySelector('#new-game');
 var aiMove;
 var userPoints = 0;
 var aiPoints = 0;
+var rounds;
+var canPlay = true;
 
 var aiTurn = function() {
   var random = Math.floor((Math.random() * 3) + 1);
@@ -34,55 +27,76 @@ var aiTurn = function() {
 }
 
 var printResult = function(userMove) {
-  if (userMove == aiMove) {
+   if (userMove === aiMove) {
     output.innerHTML = 'DRAW';
   }
 
-  if ((userMove == 'paper') && (aiMove == 'rock')) {
-    output.innerHTML = 'YOU WON: you played PAPER, computer played ROCK.';
-    userPoints++;
+  if ((userMove === 'paper' && aiMove === 'rock') ||
+  (userMove === 'rock' && aiMove === 'scissors') ||
+  (userMove === 'scissors' && aiMove === 'paper')) {
+    output.innerHTML = 'YOU WON: you played '+userMove.toUpperCase() +
+    ', computer played '+ aiMove.toUpperCase()+'.';
+    return userPoints++;
+  } else {
+    output.innerHTML = 'COMPUTER WON: computer played '+aiMove.toUpperCase() +
+    ', you played '+ userMove.toUpperCase()+'.';
+    return aiPoints++;
   }
-
-  if ((userMove == 'rock') && (aiMove == 'scissors')) {
-    output.innerHTML = 'YOU WON: you played ROCK, computer played SCISSORS.';
-    userPoints++;
-  }
-
-  if ((userMove == 'scissors') && (aiMove == 'paper')) {
-    output.innerHTML = 'YOU WON: you played SCISSORS, computer played PAPER.';
-    userPoints++;
-  }
-
-  if ((aiMove == 'paper') && (userMove == 'rock')) {
-    output.innerHTML = 'COMPUTER WON: computer played PAPER, you played ROCK.';
-    aiPoints++;
-  }
-
-  if ((aiMove == 'rock') && (userMove == 'scissors')) {
-    output.innerHTML = 'COMPUTER WON: computer played ROCK, you played SCISSORS.';
-    aiPoints++;
-  }
-
-  if ((aiMove == 'scissors') && (userMove == 'paper')) {
-    output.innerHTML = 'COMPUTER WON: computer played SCISSORS, you played PAPER.';
-    aiPoints++;
-  }
-  resultOutput.innerHTML = userPoints+' - '+aiPoints;
 }
 
-var playerMove = function(userMove) { 
-  aiTurn();
-  printResult(userMove);
+var showGameOver = function(canPlay) {
+  if (!canPlay) {
+    output.innerHTML += 'Game over, please press the new game button!<br>';
+  }
 }
 
-rock.addEventListener('click', function() {
+var playerMove = function(userMove) {
+  if (!canPlay) {
+    return;
+  }
+  
+  if (userPoints >= rounds || aiPoints >= rounds) {
+    canPlay = false;
+  }
+
+  if (canPlay) {
+    aiTurn();
+    printResult(userMove);
+    resultOutput.innerHTML = userPoints+' - '+aiPoints;
+    return;
+  } 
+  if (userPoints > aiPoints) {
+    return output.innerHTML = '<br>YOU WON THE ENTIRE GAME!!!<br>';
+  } else {
+    return output.innerHTML = '<br>COMPUTER WON THE ENTIRE GAME!!!<br>';
+  }
+}
+
+rock.addEventListener('click', function() { 
   playerMove('rock');
+  showGameOver(canPlay);
 });
 
 paper.addEventListener('click', function() {
   playerMove('paper');
+  showGameOver(canPlay);
 });
 
 scissors.addEventListener('click',function() {
   playerMove('scissors');
+  showGameOver(canPlay);
+});
+
+newGame.addEventListener('click', function() {
+  canPlay = true;
+  rounds = parseInt(window.prompt('Enter the number of won rounds to win'+
+  'entire game'));
+
+  if (!isNaN(rounds)) {
+    toWin.innerHTML = 'You have to won '+rounds+' rounds, to win the entire game';
+    output.innerHTML = '';
+    userPoints = 0;
+    aiPoints = 0;
+    resultOutput.innerHTML = userPoints+' - '+aiPoints;
+  }
 });
