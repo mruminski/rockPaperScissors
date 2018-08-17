@@ -28,40 +28,21 @@ var aiTurn = function() {
 }
 
 var printResult = function(userMove) {
-   if (userMove == aiMove) {
+   if (userMove === aiMove) {
     output.innerHTML = 'DRAW';
   }
 
-  if ((userMove == 'paper') && (aiMove == 'rock')) {
-    output.innerHTML = 'YOU WON: you played PAPER, computer played ROCK.';
-    userPoints++;
+  if ((userMove === 'paper' && aiMove === 'rock') ||
+  (userMove === 'rock' && aiMove === 'scissors') ||
+  (userMove === 'scissors' && aiMove === 'paper')) {
+    output.innerHTML = 'YOU WON: you played '+userMove.toUpperCase() +
+    ', computer played '+ aiMove.toUpperCase()+'.';
+    return userPoints++;
+  } else {
+    output.innerHTML = 'COMPUTER WON: computer played '+aiMove.toUpperCase() +
+    ', you played '+ userMove.toUpperCase()+'.';
+    return aiPoints++;
   }
-
-  if ((userMove == 'rock') && (aiMove == 'scissors')) {
-    output.innerHTML = 'YOU WON: you played ROCK, computer played SCISSORS.';
-    userPoints++;
-  }
-
-  if ((userMove == 'scissors') && (aiMove == 'paper')) {
-    output.innerHTML = 'YOU WON: you played SCISSORS, computer played PAPER.';
-    userPoints++;
-  }
-
-  if ((aiMove == 'paper') && (userMove == 'rock')) {
-    output.innerHTML = 'COMPUTER WON: computer played PAPER, you played ROCK.';
-    aiPoints++;
-  }
-
-  if ((aiMove == 'rock') && (userMove == 'scissors')) {
-    output.innerHTML = 'COMPUTER WON: computer played ROCK, you played SCISSORS.';
-    aiPoints++;
-  }
-
-  if ((aiMove == 'scissors') && (userMove == 'paper')) {
-    output.innerHTML = 'COMPUTER WON: computer played SCISSORS, you played PAPER.';
-    aiPoints++;
-  }
-  resultOutput.innerHTML = userPoints+' - '+aiPoints;
 }
 
 var showGameOver = function(canPlay) {
@@ -82,6 +63,7 @@ var playerMove = function(userMove) {
   if (canPlay) {
     aiTurn();
     printResult(userMove);
+    resultOutput.innerHTML = userPoints+' - '+aiPoints;
     return;
   } 
     return output.innerHTML = '<br>YOU WON THE ENTIRE GAME!!!<br>';
