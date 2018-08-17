@@ -11,11 +11,14 @@ zasady:
 'use strict';
 
 var output = document.getElementById('container__output');
+var resultOutput = document.getElementById('result');
 var rock = document.getElementById('rock');
 var paper = document.getElementById('paper');
 var scissors = document.getElementById('scissors');
 var userMove;
 var aiMove;
+var userPoints = 0;
+var aiPoints = 0;
 
 var aiTurn = function() {
   var random = Math.floor((Math.random() * 3) + 1);
@@ -37,27 +40,34 @@ var printResult = function(userMove) {
 
   if ((userMove == 'paper') && (aiMove == 'rock')) {
     output.innerHTML = 'YOU WON: you played PAPER, computer played ROCK.';
+    userPoints++;
   }
 
   if ((userMove == 'rock') && (aiMove == 'scissors')) {
     output.innerHTML = 'YOU WON: you played ROCK, computer played SCISSORS.';
+    userPoints++;
   }
 
   if ((userMove == 'scissors') && (aiMove == 'paper')) {
     output.innerHTML = 'YOU WON: you played SCISSORS, computer played PAPER.';
+    userPoints++;
   }
 
   if ((aiMove == 'paper') && (userMove == 'rock')) {
     output.innerHTML = 'COMPUTER WON: computer played PAPER, you played ROCK.';
+    aiPoints++;
   }
 
   if ((aiMove == 'rock') && (userMove == 'scissors')) {
     output.innerHTML = 'COMPUTER WON: computer played ROCK, you played SCISSORS.';
+    aiPoints++;
   }
 
   if ((aiMove == 'scissors') && (userMove == 'paper')) {
     output.innerHTML = 'COMPUTER WON: computer played SCISSORS, you played PAPER.';
+    aiPoints++;
   }
+  resultOutput.innerHTML = userPoints+' - '+aiPoints;
 }
 
 var playerMove = function(userMove) { 
