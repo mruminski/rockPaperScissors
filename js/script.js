@@ -7,7 +7,6 @@ var rock = document.querySelector('#rock');
 var paper = document.querySelector('#paper');
 var scissors = document.querySelector('#scissors');
 var newGame = document.querySelector('#new-game');
-var userMove;
 var aiMove;
 var userPoints = 0;
 var aiPoints = 0;
@@ -66,7 +65,11 @@ var playerMove = function(userMove) {
     resultOutput.innerHTML = userPoints+' - '+aiPoints;
     return;
   } 
+  if (userPoints > aiPoints) {
     return output.innerHTML = '<br>YOU WON THE ENTIRE GAME!!!<br>';
+  } else {
+    return output.innerHTML = '<br>COMPUTER WON THE ENTIRE GAME!!!<br>';
+  }
 }
 
 rock.addEventListener('click', function() { 
