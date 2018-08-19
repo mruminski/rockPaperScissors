@@ -29,9 +29,7 @@ var aiTurn = function() {
 var printResult = function(userMove) {
    if (userMove === aiMove) {
     output.innerHTML = 'DRAW';
-  }
-
-  if ((userMove === 'paper' && aiMove === 'rock') ||
+  } else if ((userMove === 'paper' && aiMove === 'rock') ||
   (userMove === 'rock' && aiMove === 'scissors') ||
   (userMove === 'scissors' && aiMove === 'paper')) {
     output.innerHTML = 'YOU WON: you played '+userMove.toUpperCase() +
@@ -72,19 +70,18 @@ var playerMove = function(userMove) {
   }
 }
 
-rock.addEventListener('click', function() { 
-  playerMove('rock');
-  showGameOver(canPlay);
-});
+var btnArr = document.querySelectorAll('.player-move');
 
-paper.addEventListener('click', function() {
-  playerMove('paper');
+var whenBtnClicked = function(btnIntex) {
+  var attribute = btnArr[btnIntex].getAttribute('data-move');
+  playerMove(attribute);
   showGameOver(canPlay);
-});
+}
 
-scissors.addEventListener('click',function() {
-  playerMove('scissors');
-  showGameOver(canPlay);
+btnArr.forEach(function(btn, index) {
+  btn.addEventListener('click', function() {
+    whenBtnClicked(index);
+  });
 });
 
 newGame.addEventListener('click', function() {
