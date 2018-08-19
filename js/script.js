@@ -35,11 +35,11 @@ var printResult = function(userMove) {
   (userMove === 'rock' && params.aiMove === 'scissors') ||
   (userMove === 'scissors' && params.aiMove === 'paper')) {
     output.innerHTML = 'YOU WON: you played '+userMove.toUpperCase() +
-    ', computer played '+ params.aiMove.toUpperCase()+'.';
+    ', computer played '+ params.aiMove.toUpperCase()+'.<br>';
     return params.userPoints++;
   } else {
     output.innerHTML = 'COMPUTER WON: computer played '+params.aiMove.toUpperCase() +
-    ', you played '+ userMove.toUpperCase()+'.';
+    ', you played '+ userMove.toUpperCase()+'.<br>';
     return params.aiPoints++;
   }
 }
@@ -51,12 +51,36 @@ var showGameOver = function(can) {
 }
 
 var playerMove = function(userMove) {
+  var modal = document.querySelector('.modal');
+  var modalContent = document.querySelector('.content p');
+  var closeModal = document.querySelector('.close')  
+
+  var showModal = function(e) {
+    // e.preventDefault();
+    document.querySelector('.modal').classList.add('show');
+    document.querySelector('#modal-overlay').classList.add('show');
+  }
+  
+  var hideModal = function(e) {
+    e.preventDefault();
+    document.querySelector('.modal').classList.remove('show');
+    document.querySelector('#modal-overlay').classList.remove('show');
+  }
+
+  document.querySelector('#modal-overlay').addEventListener('click', hideModal);
+	modal.addEventListener('click', function(e){
+		e.stopPropagation();
+  });
+  
+  closeModal.addEventListener('click',hideModal);
+
   if (!params.canPlay) {
     return;
   }
   
   if (params.userPoints >= params.rounds || params.aiPoints >= params.rounds) {
     params.canPlay = false;
+    showModal();
   }
 
   if (params.canPlay) {
@@ -64,12 +88,13 @@ var playerMove = function(userMove) {
     printResult(userMove);
     resultOutput.innerHTML = params.userPoints+' - '+params.aiPoints;
     return;
-  } 
-  if (params.userPoints > params.aiPoints) {
-    return output.innerHTML = '<br>YOU WON THE ENTIRE GAME!!!<br>';
-  } else {
-    return output.innerHTML = '<br>COMPUTER WON THE ENTIRE GAME!!!<br>';
   }
+
+  if (params.userPoints > params.aiPoints) {
+    modalContent.innerHTML = '<br>YOU WON THE ENTIRE GAME!!!<br>';
+  } else {
+    modalContent.innerHTML = '<br>COMPUTER WON THE ENTIRE GAME!!!<br>';
+  } 
 }
 
 var btnArr = document.querySelectorAll('.player-move');
