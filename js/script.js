@@ -12,7 +12,9 @@ var params = {
   userPoints: 0,
   aiPoints: 0,
   rounds: null,
-  canPlay: true
+  round: 0,
+  canPlay: true,
+  progress: []
 }
 
 var aiTurn = function() {
@@ -51,6 +53,7 @@ var showGameOver = function(can) {
 }
 
 var playerMove = function(userMove) {
+  params.round++;
   var modal = document.querySelector('.modal');
   var modalContent = document.querySelector('.content p');
   var closeModal = document.querySelector('.close')  
@@ -87,6 +90,13 @@ var playerMove = function(userMove) {
     aiTurn();
     printResult(userMove);
     resultOutput.innerHTML = params.userPoints+' - '+params.aiPoints;
+    params.progress.push({
+      'Round: ':params.round+'<br>',
+      'User move: ': userMove+'<br>',
+      'Computer move: ': params.aiMove+'<br>',
+      'Round result: ': output.innerHTML,
+      'Result: ': params.userPoints +' - '+params.aiPoints+'<br>'
+    })
     return;
   }
 
@@ -94,7 +104,13 @@ var playerMove = function(userMove) {
     modalContent.innerHTML = '<br>YOU WON THE ENTIRE GAME!!!<br>';
   } else {
     modalContent.innerHTML = '<br>COMPUTER WON THE ENTIRE GAME!!!<br>';
-  } 
+  }
+
+  params.progress.forEach(function(item) {
+    for (var key in item) {
+      modalContent.innerHTML += key+' '+item[key];
+    }
+  });
 }
 
 var btnArr = document.querySelectorAll('.player-move');
@@ -121,6 +137,8 @@ newGame.addEventListener('click', function() {
     output.innerHTML = '';
     params.userPoints = 0;
     params.aiPoints = 0;
+    params.round = 0;
+    params.progress = [];
     resultOutput.innerHTML = params.userPoints+' - '+params.aiPoints;
   }
 });
