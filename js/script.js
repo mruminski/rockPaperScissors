@@ -95,7 +95,7 @@ var playerMove = function(userMove) {
       'User move: ': userMove,
       'Computer move: ': params.aiMove,
       'Round result: ': output.innerHTML,
-      'Result: ': params.userPoints +' - '+params.aiPoints
+      'Game result: ': params.userPoints +' - '+params.aiPoints
     })
     return;
   }
@@ -108,11 +108,9 @@ var playerMove = function(userMove) {
 
   params.progress.forEach(function(item) {
     for (var key in item) {
-      var tr = '<tr>';
-      var th;
-      th = '<th>'+key+'</th>';
-      tr += '<td>'+item[key]+'</td></tr>';
-      modalContent.innerHTML += th + tr;
+      var tr = '';
+      tr += '<tr><td>'+key+'</td><td>'+item[key]+'</td></tr>';
+      modalContent.innerHTML += tr;
     }
   });
 }
