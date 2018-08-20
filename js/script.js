@@ -55,7 +55,7 @@ var showGameOver = function(can) {
 var playerMove = function(userMove) {
   params.round++;
   var modal = document.querySelector('.modal');
-  var modalContent = document.querySelector('.content p');
+  var modalContent = document.querySelector('#tbody');
   var closeModal = document.querySelector('.close')  
 
   var showModal = function(e) {
@@ -91,11 +91,11 @@ var playerMove = function(userMove) {
     printResult(userMove);
     resultOutput.innerHTML = params.userPoints+' - '+params.aiPoints;
     params.progress.push({
-      'Round: ':params.round+'<br>',
-      'User move: ': userMove+'<br>',
-      'Computer move: ': params.aiMove+'<br>',
+      'Round: ':params.round,
+      'User move: ': userMove,
+      'Computer move: ': params.aiMove,
       'Round result: ': output.innerHTML,
-      'Result: ': params.userPoints +' - '+params.aiPoints+'<br>'
+      'Result: ': params.userPoints +' - '+params.aiPoints
     })
     return;
   }
@@ -108,7 +108,11 @@ var playerMove = function(userMove) {
 
   params.progress.forEach(function(item) {
     for (var key in item) {
-      modalContent.innerHTML += key+' '+item[key];
+      var tr = '<tr>';
+      var th;
+      th = '<th>'+key+'</th>';
+      tr += '<td>'+item[key]+'</td></tr>';
+      modalContent.innerHTML += th + tr;
     }
   });
 }
