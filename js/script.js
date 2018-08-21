@@ -91,7 +91,7 @@ var playerMove = function(userMove) {
     printResult(userMove);
     resultOutput.innerHTML = params.userPoints+' - '+params.aiPoints;
     params.progress.push({
-      round :params.round,
+      round: params.round,
       userMove: userMove,
       computerMove: params.aiMove,
       roundResult: output.innerHTML,
