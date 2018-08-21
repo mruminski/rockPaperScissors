@@ -11,10 +11,21 @@
 			<div class="container__to-win"></div>
 			<div class="container__result"></div>
 			<div class="container__output"></div>
-      <button class="container__btn" id="rock">Rock</button>
-      <button class="container__btn" id="paper">Paper</button>
-			<button class="container__btn" id="scissors">Scissors</button>
+      <button class="container__btn player-move" id="rock" data-move="rock">Rock</button>
+      <button class="container__btn player-move" id="paper" data-move="paper">Paper</button>
+			<button class="container__btn player-move" id="scissors" data-move="scissors">Scissors</button>
 			<button class="container__btn" id="new-game">New game</button>
+		</section>
+		<section class="overlay" id="modal-overlay">
+			<div class="modal" id="modal-result">
+				<a href="#" class="close">x</a>
+				<header>Results</header>
+				<div class="content">
+					<table>
+						<tbody id="tbody"></tbody>
+					</table>
+				</div>
+			</div>
 		</section>
 		<footer class="footer">
 			<p class="footer__content">Developed by mruminski</p>
