@@ -91,11 +91,11 @@ var playerMove = function(userMove) {
     printResult(userMove);
     resultOutput.innerHTML = params.userPoints+' - '+params.aiPoints;
     params.progress.push({
-      'Round: ':params.round,
-      'User move: ': userMove,
-      'Computer move: ': params.aiMove,
-      'Round result: ': output.innerHTML,
-      'Game result: ': params.userPoints +' - '+params.aiPoints
+      round :params.round,
+      userMove: userMove,
+      computerMove: params.aiMove,
+      roundResult: output.innerHTML,
+      gameResult: params.userPoints +' - '+params.aiPoints
     })
     return;
   }
@@ -109,7 +109,7 @@ var playerMove = function(userMove) {
   params.progress.forEach(function(item) {
     for (var key in item) {
       var tr = '';
-      tr += '<tr><td>'+key+'</td><td>'+item[key]+'</td></tr>';
+      tr += '<tr><td>'+key+' :</td><td>'+item[key]+'</td></tr>';
       modalContent.innerHTML += tr;
     }
   });
